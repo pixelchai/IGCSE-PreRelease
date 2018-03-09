@@ -27,7 +27,8 @@ components={
 }
 ordernumbers=[]#is explicitly required in task 2
 orderno = 1
-while True:
+done = False
+while not done:
     choices={}
     #choices
     for component in components:
@@ -68,5 +69,11 @@ while True:
     print("Estimated total cost: $"+str(estimate))
 
     print('\n')
-    if raw_input("Another order? (y/n)\n").lower()=='n': break
+    input = raw_input("Another order? (y/n)\n")
+    while True:
+        if input=='n':
+            done=True
+            break
+        elif input == 'y': break
+        else: print("Please input 'y' for yes and 'n' for no. Please try again")
     orderno+=1
