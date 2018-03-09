@@ -56,8 +56,17 @@ while True:
             choices[component]=opts[selection-1]
             break
 
-    print "Estimation:"
-    #todo
+    print "Estimation Summary:"
+    estimate = 0
+    for component in choices:
+        selected = choices[component] #otherwise may get 'too many values to unpack' error
+        price = components[component][selected][0] #because will be used twice
+        estimate+=price
+        print(component+": "+selected+" - $"+str(price))
+    estimate*=1.2 #add 20%
+    print('------------------------------')
+    print("Estimated total cost: $"+str(estimate))
 
+    print('\n')
     if raw_input("Another order? (y/n)\n").lower()=='n': break
     orderno+=1
