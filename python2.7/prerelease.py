@@ -1,30 +1,35 @@
 import datetime
 
+#object which holds table's values + no. components sold
+#[component][component type]
+# -> [0] = price
+# -> [1] = stock
+# -> [2] = no. sold
 components={
     'processor':{
-        'p3':[100,10],
-        'p5': [120, 10],
-        'p7': [200, 10],
+        'p3':[100,10, 0],
+        'p5': [120, 10, 0],
+        'p7': [200, 10, 0],
     },
     'ram':{
-            '16GB':[75,10],
-            '32GB': [150, 10],
+            '16GB':[75, 10, 0],
+            '32GB': [150, 10, 0],
     },
     'storage':{
-            '1TB':[50,10],
-            '2TB': [100, 10],
+            '1TB':[50, 10, 0],
+            '2TB': [100, 10, 0],
     },
     'screen':{
-            '19"':[65,10],
-            '23"': [120, 10],
+            '19"':[65, 10, 0],
+            '23"': [120, 10, 0],
     },
     'case':{
-            'Mini Tower':[40,10],
-            'Midi Tower': [70, 10],
+            'Mini Tower':[40, 10, 0],
+            'Midi Tower': [70, 10, 0],
     },
     'usb ports':{
-            '2 ports':[10,10],
-            '4 ports': [20, 10],
+            '2 ports':[10, 10, 0],
+            '4 ports': [20, 10, 0],
     }
 }
 
@@ -42,12 +47,13 @@ def getChoice(prompt="Yes or no?"):
 
 ordernumbers=[]#is explicitly required in task 2
 estimateno = 1
+sum=0
 done = False
 while not done:
     choices={}
     #choices
     for component in components:
-        print("Please select your desired "+component+":")
+        print("Please select your desired "+component+": ")
         opts = components[component].keys()
         i=0
         for opt in opts:
@@ -83,6 +89,7 @@ while not done:
 
     print('')#print linebreak
     print "Estimation Summary:"
+    print "Estimation number: "+str(estimateno)
     print(summary)
     print("Estimated total cost: $"+str(estimate))
     print('')
@@ -100,13 +107,16 @@ while not done:
             #'update stock levels'
             for component in choices:
                 components[component][choices[component]][1]-=1
+                components[component][choices[component]][2] += 1 #need for task 3
             ordernumbers.append(estimateno) #'add the unique estimate number to the list of order numbers'
+            sum+= estimate #need for task 3
 
             #assuming 'add the customer's details' means add it to the order summary output (as opp. to add to a list?)
             #using string here so can be changed to physical print easily if need be (question ambiguous)
             ordersummary=''
             ordersummary+='\n'
             ordersummary +=("Order Summary:\n")
+            ordersummary +="Estimation number: "+str(estimateno)+"\n"
             ordersummary+=(summary+'\n') #assuming order summary needs to show components selected
             ordersummary+=("Estimated total cost: $" + str(estimate)+'\n')
             ordersummary+=('------------------------------'+'\n')
@@ -114,13 +124,19 @@ while not done:
             ordersummary+=("Date: " + str(datetime.datetime.now().date())+'\n\n')
 
             for i in range(2): #'print two copies' assuming print means print to console
-                print(ordersummary)
-
-
-
+                print(("Customer Copy:" if i % 2 == 0 else "Shop Copy:")+ordersummary)
 
     print('')
-    if not getChoice('Another order?'):
+    if not getChoice('Is there another order?'):
         done = True
         break
     estimateno += 1
+
+#task 3
+print("End of day Summary:")
+print("Total orders made: "+str(len(ordernumbers)))
+print("Total value of the orders: $"+str(sum)) #assuming 'showing the total (...) value of the orders' (ambiguous)
+for component in components:
+    print(component+" sales:")
+    for type in components[component]:
+        print("\t"+type+": "+str(components[component][type][2]))
