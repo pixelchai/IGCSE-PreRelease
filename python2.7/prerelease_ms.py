@@ -31,7 +31,27 @@ while not done:
         
         for j in range(curl):
             curi=offset+j
-            print(str(curi)+") "+componentoptions[curi]+" - $"+str(prices[curi])+" - "+str(stock[curi])+" in stock.")
+            print(str(j+1)+") "+componentoptions[curi]+" - $"+str(prices[curi])+" - "+str(stock[curi])+" in stock.")
+        
+        while True: #need ms fallback here
+            input=raw_input()
+            if(not input.isdigit()):
+                print("Please input digits only. Please enter a number (1-" + str(curl) + "). Please try again.")
+                continue
+            try:
+                selection = int(input)
+                if(selection<1 or selection>curl):
+                    print("Selection out of range. Please enter a number (1-" + str(curl) + "). Please try again.")
+                    continue
+            except:
+                #should theoretically never happen
+                print("Internal error parsing input. Please try again.")
+                continue
+            choices.append(offset+selection-1)
+            print(choices)
+            break
+        
+        #TODO SUMMARY
         
         offset+=curl
     break #TEMP
