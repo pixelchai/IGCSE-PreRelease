@@ -29,10 +29,12 @@ while not done:
         curl=sections[i]
         print("Please select your desired "+componentnames[i]+" (1-"+str(curl)+"): ")
         
+        #print selection
         for j in range(curl):
             curi=offset+j
             print(str(j+1)+") "+componentoptions[curi]+" - $"+str(prices[curi])+" - "+str(stock[curi])+" in stock.")
         
+        #select loop
         while True: #need ms fallback here
             input=raw_input()
             if(not input.isdigit()):
@@ -48,10 +50,23 @@ while not done:
                 print("Internal error parsing input. Please try again.")
                 continue
             choices.append(offset+selection-1)
-            print(choices)
+            #print(choices)
             break
-        
-        #TODO SUMMARY
-        
         offset+=curl
+    
+    summary=''
+    estimate=0
+    for i in range(len(choices)):
+      price=prices[choices[i]]
+      estimate+=price
+      summary+=componentnames[i]+": "+componentoptions[choices[i]]+" - $"+str(price)+'\n'
+    estimate*=1.2 #add 20%
+    
+    print('')
+    print("Estimation Summary:")
+    print("Estimation number: "+str(estimateno))
+    print(summary)
+    print("Estimated total cost: $"+str(estimate))
+    print('')
+        
     break #TEMP
