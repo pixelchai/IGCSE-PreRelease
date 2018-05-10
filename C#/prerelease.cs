@@ -127,14 +127,13 @@ namespace prerelease
                             Console.WriteLine(order_summary);
                         }
                     }
-
-                    if (!GetChoice("Is there another order?"))
-                    {
-                        done = true;
-                        break;
-                    }
-                    estimate_no += 1;
                 }
+                if (!GetChoice("Is there another order?"))
+                {
+                    done = true;
+                    break;
+                }
+                estimate_no += 1;
             }
 
             Console.WriteLine("End of day Summary:");

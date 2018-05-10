@@ -544,7 +544,7 @@
 			IL_035f: call bool prerelease.PreRelease::GetChoice(string)
 			IL_0364: stloc.s 30
 			IL_0366: ldloc.s 30
-			IL_0368: brfalse IL_0572
+			IL_0368: brfalse IL_0553
 
 			IL_036d: nop
 			IL_036e: ldc.i4.1
@@ -782,25 +782,25 @@
 
 			IL_0551: nop
 
-			IL_0552: ldstr "Is there another order?"
-			IL_0557: call bool prerelease.PreRelease::GetChoice(string)
-			IL_055c: ldc.i4.0
-			IL_055d: ceq
-			IL_055f: stloc.s 43
-			IL_0561: ldloc.s 43
-			IL_0563: brfalse.s IL_056b
+			IL_0552: nop
 
-			IL_0565: nop
-			IL_0566: ldc.i4.1
-			IL_0567: stloc.s done
-			IL_0569: br.s IL_0581
+			IL_0553: ldstr "Is there another order?"
+			IL_0558: call bool prerelease.PreRelease::GetChoice(string)
+			IL_055d: ldc.i4.0
+			IL_055e: ceq
+			IL_0560: stloc.s 43
+			IL_0562: ldloc.s 43
+			IL_0564: brfalse.s IL_056c
 
-			IL_056b: ldloc.s estimate_no
-			IL_056d: ldc.i4.1
-			IL_056e: add
-			IL_056f: stloc.s estimate_no
-			IL_0571: nop
+			IL_0566: nop
+			IL_0567: ldc.i4.1
+			IL_0568: stloc.s done
+			IL_056a: br.s IL_0581
 
+			IL_056c: ldloc.s estimate_no
+			IL_056e: ldc.i4.1
+			IL_056f: add
+			IL_0570: stloc.s estimate_no
 			IL_0572: nop
 
 			IL_0573: ldloc.s done
