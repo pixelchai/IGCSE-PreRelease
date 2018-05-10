@@ -18,7 +18,6 @@ def getChoice(prompt="Yes or no?"):
             print("Please input 'y' for yes and 'n' for no. Please try again")
             input = raw_input().lower()
 
-
 order_numbers = []
 estimate_no = 1
 order_values = []
