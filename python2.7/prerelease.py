@@ -47,7 +47,7 @@ def getChoice(prompt="Yes or no?"):
 
 ordernumbers=[]#is explicitly required in task 2
 estimateno = 1
-saleslist=[]
+ordervalues=[]
 done = False
 while not done:
     choices={}
@@ -109,7 +109,7 @@ while not done:
                 components[component][choices[component]][1]-=1
                 components[component][choices[component]][2] += 1 #need for task 3
             ordernumbers.append(estimateno) #'add the unique estimate number to the list of order numbers'
-            saleslist.append(estimate) #need for task 3
+            ordervalues.append(estimate) #need for task 3
 
             #assuming 'add the customer's details' means add it to the order summary output (as opp. to add to a list?)
             #using string here so can be changed to physical print easily if need be (question ambiguous)
@@ -137,7 +137,7 @@ print("End of day Summary:")
 print("Total orders made: "+str(len(ordernumbers)))
 sumsales = 0
 counter=1
-for sale in saleslist:
+for sale in ordervalues:
     print("\tOrder #"+str(counter)+" - $"+str(sale))
     sumsales+=sale
     counter+=1
