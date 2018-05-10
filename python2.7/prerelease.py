@@ -22,7 +22,7 @@ def getChoice(prompt="Yes or no?"):
 order_numbers = []
 estimate_no = 1
 order_values = []
-done = False  # ms fallback
+done = False
 while not done:
     choices = []
     offset = 0
@@ -30,13 +30,11 @@ while not done:
         section_length = section_lengths[component_type_index]
         print("Please select your desired " + component_types[component_type_index] + " (1-" + str(section_length) + "): ")
 
-        # print selection
         for relative_component_index in range(section_length):
             absolute_component_index = offset + relative_component_index
             print(str(relative_component_index + 1) + ") " + components[absolute_component_index] + " - $" + str(prices[absolute_component_index]) + " - " + str(stock[absolute_component_index]) + " in stock.")
 
-        # select loop
-        while True:  # need ms fallback here
+        while True:
             input = raw_input()
             if (not input.isdigit()):
                 print("Please input digits only. Please enter a number (1-" + str(section_length) + "). Please try again.")
@@ -59,7 +57,7 @@ while not done:
         price = prices[choices[component_type_index]]
         estimate += price
         summary += component_types[component_type_index] + ": " + components[choices[component_type_index]] + " - $" + str(price) + '\n'
-    estimate *= 1.2  # add 20%
+    estimate *= 1.2
 
     print('')
     print("Estimation Summary:")
@@ -84,8 +82,7 @@ while not done:
             order_numbers.append(estimate_no)
             order_values.append(estimate)
 
-            order_summary = ''
-            order_summary += '\n'
+            order_summary = '\n'
             order_summary += "Order Summary:\n"
             order_summary += "Estimation number: " + str(estimate_no) + "\n"
             order_summary += summary + '\n'
