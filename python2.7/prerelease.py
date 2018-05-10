@@ -15,7 +15,7 @@ def getChoice(prompt="Yes or no?"):
         elif input == 'y':
             return True
         else:
-            print("Please input 'y' for yes and 'n' for no. Please try again")
+            print("Please input 'y' for yes and 'n' for no. Please try again:")
             input = raw_input().lower()
 
 order_numbers = []
@@ -52,18 +52,16 @@ while not done:
 
     summary = ''
     estimate = 0
-    for component_type_index in range(len(choices)):
-        price = prices[choices[component_type_index]]
+    for choice_index in range(len(choices)):
+        price = prices[choices[choice_index]]
         estimate += price
-        summary += component_types[component_type_index] + ": " + components[choices[component_type_index]] + " - $" + str(price) + '\n'
+        summary += component_types[choice_index] + ": " + components[choices[choice_index]] + " - $" + str(price) + '\n'
     estimate *= 1.2
 
-    print('')
     print("Estimation Summary:")
     print("Estimation number: " + str(estimate_no))
     print(summary)
     print("Estimated total cost: $" + str(estimate))
-    print('')
 
     if getChoice('Would you like to order this?'):
         is_in_stock = True
@@ -102,10 +100,10 @@ print("End of day Summary:")
 num_orders=len(order_numbers)
 print("Total orders made: " + str(num_orders))
 total_value=0
-for num in range(num_orders):
-    print("\tOrder number " + str(order_numbers[num]) + " - $" + str(order_values[num]))
-    total_value+=order_values[num]
+for index in range(num_orders):
+    print("\tOrder number " + str(order_numbers[index]) + " - $" + str(order_values[index]))
+    total_value+=order_values[index]
 print("Total value of the orders: $" + str(total_value))
 print("Total component sales:")
-for num in range(len(components)):
-    print("\t" + components[num] +": " + str(num_components_sold[num]))
+for index in range(len(components)):
+    print("\t" + components[index] +": " + str(num_components_sold[index]))

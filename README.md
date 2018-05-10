@@ -2,7 +2,9 @@ IGCSE PRE-RELEASE MATERIAL
 ---------------------------
 Programs implementing the 2018 IGCSE Pre Release tasks, written in various coding languages/formats, each in their respective folders:
 - [Python2.7](python2.7/prerelease.py)
-- ...
+- [C#](C#/prerelease.cs)
+- [VB.Net](VB.Net/prerelease.vb)
+- [IL](IL/prerelease.il)
 
 Sample Output:
 --------------
