@@ -1,41 +1,14 @@
 import datetime
 
-#object which holds table's values + no. components sold
-#[component][component type]
-# -> [0] = price
-# -> [1] = stock
-# -> [2] = no. sold
-components={
-    'processor':{
-        'p3':[100, 2, 0],
-        'p5': [120, 1, 0],
-        'p7': [200, 3, 0],
-    },
-    'ram':{
-            '16GB':[75, 2, 0],
-            '32GB': [150, 1, 0],
-    },
-    'storage':{
-            '1TB':[50, 2, 0],
-            '2TB': [100, 4, 0],
-    },
-    'screen':{
-            '19"':[65, 1, 0],
-            '23"': [120, 2, 0],
-    },
-    'case':{
-            'Mini Tower':[40, 1, 0],
-            'Midi Tower': [70, 2, 0],
-    },
-    'usb ports':{
-            '2 ports':[10, 1, 0],
-            '4 ports': [20, 2, 0],
-    }
-}
+component_types = ['processor', 'ram', 'storage', 'screen', 'case', 'usb ports']
+section_lengths = [3, 2, 2, 2, 2, 2]
+components = ['p3', 'p5', 'p7', '16GB', '32GB', '1TB', '2TB', '19"', '23"', 'Mini Tower', 'Midi Tower', '2 ports', '4 ports']
+prices = [100, 120, 200, 75, 150, 50, 100, 65, 120, 40, 70, 10, 20]
+stock = [1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5]
+num_components_sold = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-#seperated this into function because used more than once
 def getChoice(prompt="Yes or no?"):
-    input = raw_input(prompt+" (y/n)\n").lower()
+    input = raw_input(prompt + " (y/n)\n").lower()
     while True:
         if input == 'n':
             return False
@@ -43,106 +16,100 @@ def getChoice(prompt="Yes or no?"):
             return True
         else:
             print("Please input 'y' for yes and 'n' for no. Please try again")
-            input=raw_input().lower()
+            input = raw_input().lower()
 
-ordernumbers=[]#is explicitly required in task 2
-estimateno = 1
-ordervalues=[]
-done = False
+
+order_numbers = []
+estimate_no = 1
+order_values = []
+done = False  # ms fallback
 while not done:
-    choices={}
-    #choices
-    for component in components:
-        opts = components[component].keys()
-        print("Please select your desired "+component+" (1-"+str(len(opts))+"): ")
-        counter=0
-        for opt in opts:
-            counter+=1
-            print(str(counter) + ") " + opt + " - $" + str(components[component][opt][0]) + " - " + str(components[component][opt][1]) + " in stock.") #does not explicitly say to show stock in task but impl anyway
+    choices = []
+    offset = 0
+    for component_type_index in range(len(component_types)):
+        section_length = section_lengths[component_type_index]
+        print("Please select your desired " + component_types[component_type_index] + " (1-" + str(section_length) + "): ")
 
-        while True:
-            input=raw_input()
-            if(not input.isdigit()):
-                print("Please input digits only. Please enter a number (1-" + str(counter) + "). Please try again.")
+        # print selection
+        for relative_component_index in range(section_length):
+            absolute_component_index = offset + relative_component_index
+            print(str(relative_component_index + 1) + ") " + components[absolute_component_index] + " - $" + str(prices[absolute_component_index]) + " - " + str(stock[absolute_component_index]) + " in stock.")
+
+        # select loop
+        while True:  # need ms fallback here
+            input = raw_input()
+            if (not input.isdigit()):
+                print("Please input digits only. Please enter a number (1-" + str(section_length) + "). Please try again.")
                 continue
             try:
                 selection = int(input)
-                if(selection<1 or selection>counter):
-                    print("Selection out of range. Please enter a number (1-" + str(counter) + "). Please try again.")
+                if (selection < 1 or selection > section_length):
+                    print("Selection out of range. Please enter a number (1-" + str(section_length) + "). Please try again.")
                     continue
             except:
-                #should theoretically never happen
                 print("Internal error parsing input. Please try again.")
                 continue
-            choices[component]=opts[selection-1]
+            choices.append(offset + selection - 1)
             break
+        offset += section_length
 
-    #estimation summary
-    summary='' #because need to use this twice
+    summary = ''
     estimate = 0
-    for component in choices:
-        selected = choices[component] #otherwise may get 'too many values to unpack' error
-        price = components[component][selected][0] #because will be used twice
-        estimate+=price
-        summary+=(component+": "+selected+" - $"+str(price))+'\n'
-    estimate*=1.2 #add 20%
+    for component_type_index in range(len(choices)):
+        price = prices[choices[component_type_index]]
+        estimate += price
+        summary += component_types[component_type_index] + ": " + components[choices[component_type_index]] + " - $" + str(price) + '\n'
+    estimate *= 1.2  # add 20%
 
-    print('')#print linebreak
-    print "Estimation Summary:"
-    print "Estimation number: "+str(estimateno)
+    print('')
+    print("Estimation Summary:")
+    print("Estimation number: " + str(estimate_no))
     print(summary)
-    print("Estimated total cost: $"+str(estimate))
+    print("Estimated total cost: $" + str(estimate))
     print('')
 
     if getChoice('Would you like to order this?'):
-        instock = True
-        for component in choices:
-            if(components[component][choices[component]][1]<=0):
-                instock = False
+        is_in_stock = True
+        for choice in choices:
+            if(stock[choice]<=0):
+                is_in_stock=False
                 break
 
-        if not instock:
+        if not is_in_stock:
             print('Unfortunately, one or more of your selected components are out of stock. Please try again later.')
         else:
-            #'update stock levels'
-            for component in choices:
-                components[component][choices[component]][1]-=1
-                components[component][choices[component]][2] += 1 #need for task 3
-            ordernumbers.append(estimateno) #'add the unique estimate number to the list of order numbers'
-            ordervalues.append(estimate) #need for task 3
+            for choice in choices:
+                stock[choice]-=1
+                num_components_sold[choice]+=1
+            order_numbers.append(estimate_no)
+            order_values.append(estimate)
 
-            #assuming 'add the customer's details' means add it to the order summary output (as opp. to add to a list?)
-            #using string here so can be changed to physical print easily if need be (question ambiguous)
-            ordersummary=''
-            ordersummary+='\n'
-            ordersummary +=("Order Summary:\n")
-            ordersummary +="Estimation number: "+str(estimateno)+"\n"
-            ordersummary+=(summary+'\n') #assuming order summary needs to show components selected
-            ordersummary+=("Estimated total cost: $" + str(estimate)+'\n')
-            ordersummary+=('------------------------------'+'\n')
-            ordersummary+=("Customer's details: " + raw_input('Please enter your details.\n')+'\n') #because doesn't really specify what type of details
-            ordersummary+=("Date: " + str(datetime.datetime.now().date())+'\n\n')
+            order_summary = ''
+            order_summary += '\n'
+            order_summary += "Order Summary:\n"
+            order_summary += "Estimation number: " + str(estimate_no) + "\n"
+            order_summary += summary + '\n'
+            order_summary += "Estimated total cost: $" + str(estimate) + '\n'
+            order_summary += '------------------------------' + '\n'
+            order_summary += "Customer's details: " + raw_input('Please enter your details:\n') + '\n'
+            order_summary += "Date: " + str(datetime.datetime.now().date()) + '\n\n'
 
-            for counter in range(2): #'print two copies' assuming print means print to console
-                print(("Customer Copy:" if counter % 2 == 0 else "Shop Copy:") + ordersummary)
+            for counter in range(2):
+                print(("Customer Copy:" if counter % 2 == 0 else "Shop Copy:") + order_summary)
 
-    print('')
-    if not getChoice('Is there another order?'):
-        done = True
-        break
-    estimateno += 1
+        if not getChoice('Is there another order?'):
+            done = True
+            break
+        estimate_no+=1
 
-#task 3
 print("End of day Summary:")
-print("Total orders made: "+str(len(ordernumbers)))
-sumsales = 0
-counter=1
-for sale in ordervalues:
-    print("\tOrder #"+str(counter)+" - $"+str(sale))
-    sumsales+=sale
-    counter+=1
-print("Total value of the orders: $" + str(sumsales)) #assuming 'showing the total (...) value of the orders' (ambiguous)
-for component in components:
-    print(component+" sales:")
-    for type in components[component]:
-        print("\t"+type+": "+str(components[component][type][2]))
+num_orders=len(order_numbers)
+print("Total orders made: " + str(num_orders))
+total_value=0
+for num in range(num_orders):
+    print("\tOrder number " + str(order_numbers[num]) + " - $" + str(order_values[num]))
+    total_value+=order_values[num]
+print("Total value of the orders: $" + str(total_value))
+print("Total component sales:")
+for num in range(len(components)):
+    print("\t" + components[num] +": " + str(num_components_sold[num]))
