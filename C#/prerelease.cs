@@ -46,31 +46,31 @@ namespace prerelease
                     {
                         int absolute_component_index = offset + relative_component_index;
                         Console.WriteLine((relative_component_index + 1) + ") " + components[absolute_component_index] + " - $" + prices[absolute_component_index] + " - " + stock[absolute_component_index] + " in stock.");
-
                     }
-                        while (true)
+
+                    while (true)
+                    {
+                        string input = Console.ReadLine();
+                        int selection;
+                        if (!int.TryParse(input, out selection))
                         {
-                            string input = Console.ReadLine();
-                            int selection;
-                            if (!int.TryParse(input, out selection))
-                            {
-                                Console.WriteLine("Error parsing input. Please input digits only. Please enter a number (1-" + section_length + "). Please try again.");
-                                continue;
-                            }
-                            else if (selection < 1 || selection > section_length)
-                            {
-                                Console.WriteLine("Selection out of range. Please enter a number (1-" + section_length + "). Please try again.");
-                                continue;
-                            }
-                            choices.Add(offset + selection - 1);
-                            break;
+                            Console.WriteLine("Error parsing input. Please input digits only. Please enter a number (1-" + section_length + "). Please try again.");
+                            continue;
                         }
-                        offset += section_length;
+                        else if (selection < 1 || selection > section_length)
+                        {
+                            Console.WriteLine("Selection out of range. Please enter a number (1-" + section_length + "). Please try again.");
+                            continue;
+                        }
+                        choices.Add(offset + selection - 1);
+                        break;
+                    }
+                    offset += section_length;
                 }
 
                 string summary = "";
                 double estimate = 0;
-                for(int choice_index =0; choice_index < choices.Count; choice_index++)
+                for (int choice_index = 0; choice_index < choices.Count; choice_index++)
                 {
                     double price = prices[choices[choice_index]];
                     estimate += price;
@@ -83,10 +83,10 @@ namespace prerelease
                 Console.WriteLine(summary);
                 Console.WriteLine("Estimated total cost: $" + estimate);
 
-                if(GetChoice("Would you like to order this?"))
+                if (GetChoice("Would you like to order this?"))
                 {
                     bool is_in_stock = true;
-                    foreach(int choice_index in choices)
+                    foreach (int choice_index in choices)
                     {
                         if (stock[choice_index] <= 0)
                         {
@@ -101,7 +101,7 @@ namespace prerelease
                     }
                     else
                     {
-                        foreach(int choice_index in choices)
+                        foreach (int choice_index in choices)
                         {
                             stock[choice_index] -= 1;
                             num_components_sold[choice_index] += 1;
@@ -120,7 +120,7 @@ namespace prerelease
                         order_summary += "Customer's details: " + input + Environment.NewLine;
                         order_summary += "Date: " + DateTime.Now;
 
-                        for(int counter = 0; counter < 2; counter++)
+                        for (int counter = 0; counter < 2; counter++)
                         {
                             if (counter % 2 == 0) Console.WriteLine("Customer Copy:");
                             else Console.WriteLine("Shop Copy:");
@@ -128,7 +128,7 @@ namespace prerelease
                         }
                     }
 
-                    if(!GetChoice("Is there another order?"))
+                    if (!GetChoice("Is there another order?"))
                     {
                         done = true;
                         break;
@@ -140,14 +140,14 @@ namespace prerelease
             Console.WriteLine("End of day Summary:");
             int num_orders = order_numbers.Count;
             double total_value = 0;
-            for(int index = 0; index < num_orders; index++)
+            for (int index = 0; index < num_orders; index++)
             {
                 Console.WriteLine("\tOrder number " + order_numbers[index] + " - $" + order_values[index]);
                 total_value += order_values[index];
             }
             Console.WriteLine("Total value of the orders: $" + total_value);
             Console.WriteLine("Total component sales:");
-            for(int index = 0; index < components.Length; index++)
+            for (int index = 0; index < components.Length; index++)
             {
                 Console.WriteLine("\t" + components[index] + ": " + num_components_sold[index]);
             }
