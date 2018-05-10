@@ -8,32 +8,31 @@ Sample Output:
 --------------
 ([python version](python2.7/prerelease.py) output:)
 ```
-C:\Python27\python.exe C:\Users\syanochara\PycharmProjects\IGCSE-PreRelease\python2.7\prerelease.py
 Please select your desired processor (1-3):
 1) p3 - $100 - 1 in stock.
 2) p5 - $120 - 5 in stock.
 3) p7 - $200 - 5 in stock.
-1
+>1
 Please select your desired ram (1-2):
 1) 16GB - $75 - 5 in stock.
 2) 32GB - $150 - 5 in stock.
-1
+>1
 Please select your desired storage (1-2):
 1) 1TB - $50 - 5 in stock.
 2) 2TB - $100 - 5 in stock.
-1
+>1
 Please select your desired screen (1-2):
 1) 19" - $65 - 5 in stock.
 2) 23" - $120 - 5 in stock.
-1
+>1
 Please select your desired case (1-2):
 1) Mini Tower - $40 - 5 in stock.
 2) Midi Tower - $70 - 5 in stock.
-1
+>1
 Please select your desired usb ports (1-2):
 1) 2 ports - $10 - 5 in stock.
 2) 4 ports - $20 - 5 in stock.
-1
+>1
 
 Estimation Summary:
 Estimation number: 1
@@ -47,9 +46,9 @@ usb ports: 2 ports - $10
 Estimated total cost: $408.0
 
 Would you like to order this? (y/n)
-y
+>y
 Please enter your details:
-Bobba
+>Bobba
 Customer Copy:
 Order Summary:
 Estimation number: 1
@@ -83,38 +82,38 @@ Date: 2018-05-10
 
 
 Is there another order? (y/n)
-asdsadasd
+>asdsadasd
 Please input 'y' for yes and 'n' for no. Please try again
-y
+>y
 Please select your desired processor (1-3):
 1) p3 - $100 - 0 in stock.
 2) p5 - $120 - 5 in stock.
 3) p7 - $200 - 5 in stock.
-p3
+>p3
 Please input digits only. Please enter a number (1-3). Please try again.
-4
+>4
 Selection out of range. Please enter a number (1-3). Please try again.
-2
+>2
 Please select your desired ram (1-2):
 1) 16GB - $75 - 4 in stock.
 2) 32GB - $150 - 5 in stock.
-2
+>2
 Please select your desired storage (1-2):
 1) 1TB - $50 - 4 in stock.
 2) 2TB - $100 - 5 in stock.
-2
+>2
 Please select your desired screen (1-2):
 1) 19" - $65 - 4 in stock.
 2) 23" - $120 - 5 in stock.
-2
+>2
 Please select your desired case (1-2):
 1) Mini Tower - $40 - 4 in stock.
 2) Midi Tower - $70 - 5 in stock.
-2
+>2
 Please select your desired usb ports (1-2):
 1) 2 ports - $10 - 4 in stock.
 2) 4 ports - $20 - 5 in stock.
-2
+>2
 
 Estimation Summary:
 Estimation number: 2
@@ -128,9 +127,9 @@ usb ports: 4 ports - $20
 Estimated total cost: $696.0
 
 Would you like to order this? (y/n)
-y
+>y
 Please enter your details:
-Bibba
+>Bibba
 Customer Copy:
 Order Summary:
 Estimation number: 2
@@ -164,7 +163,7 @@ Date: 2018-05-10
 
 
 Is there another order? (y/n)
-n
+>n
 End of day Summary:
 Total orders made: 2
 	Order number 1 - $408.0
@@ -189,4 +188,5 @@ Total component sales:
 
 
 2018 IGCSE Pre Release tasks:
+-----------------------------
 ![pre release](pre_release.jpg)
